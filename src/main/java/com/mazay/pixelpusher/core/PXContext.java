@@ -1,5 +1,7 @@
 package com.mazay.pixelpusher.core;
 
+import com.mazay.pixelpusher.pixels.Pixel;
+
 import java.util.Objects;
 
 /**
@@ -11,17 +13,39 @@ public class PXContext {
 
     private View view;
     private MainEntity mainEntity;
+    private ApplicationConfiguration applicationConfiguration;
+
+    private Pixel[][] scene1;
+    private Pixel[][] scene2;
+    private boolean sceneFlag;
 
     private PXContext() {
         this.view = new View();
         this.mainEntity = new MainEntity();
+        this.applicationConfiguration = new ApplicationConfiguration();
     }
 
-    public static PXContext getContext() {
+    static PXContext getContext() {
         if(Objects.isNull(context)) {
             context = new PXContext();
         }
         return context;
+    }
+
+    public Pixel[][] getSceneToDraw() {
+        if(sceneFlag) {
+            return scene1;
+        }else{
+            return scene2;
+        }
+    }
+
+    public Pixel[][] getSceneToProcess() {
+        if(sceneFlag) {
+            return scene2;
+        }else{
+            return scene1;
+        }
     }
 
     // Getters section
@@ -32,5 +56,9 @@ public class PXContext {
 
     public MainEntity getMainEntity() {
         return mainEntity;
+    }
+
+    public ApplicationConfiguration getApplicationConfiguration() {
+        return applicationConfiguration;
     }
 }
